@@ -120,7 +120,7 @@ For CPIX Response, please refer to [PallyCon CPIX API Guide](https://pallycon.co
 ---------------------------------------
 
 ## References
-- https://dashif.org/docs/CPIX2.1/HTML/Index.html
+- https://dashif-documents.azurewebsites.net/Cpix/master/Cpix.html
 - https://pallycon.com/docs/en/multidrm/packaging/cpix-api/
 
 ---------------------------------------
