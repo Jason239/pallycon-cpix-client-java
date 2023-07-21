@@ -39,6 +39,7 @@ class CpixClientTest {
 	}
 
 	@Test
+	@DisplayName("CPIX Response Output Test")
 	public void testGetContentKeyInfoFromPallyconKMS()
 		throws CpixClientException, JsonProcessingException {
 		String contentId = "cpix-client-test-cid";
