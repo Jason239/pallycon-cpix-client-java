@@ -1,13 +1,12 @@
 package com.pallycon.cpix;
 
-import static com.pallycon.cpix.util.StringUtil.decodeBase64;
-
 import com.pallycon.cpix.dto.ContentPackagingInfo;
 import com.pallycon.cpix.dto.DrmType;
 import com.pallycon.cpix.dto.EncryptionScheme;
 import com.pallycon.cpix.dto.MultiDrmInfo;
 import com.pallycon.cpix.dto.TrackType;
 import com.pallycon.cpix.exception.CpixClientException;
+import com.pallycon.cpix.util.StringUtil;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -269,11 +268,11 @@ public class PallyConCpixClient implements CpixClient{
 							case FAIRPLAY_SYSTEM_ID:
 								Element uriExtXKeyElement = (Element) drmSystem.getElementsByTagName("cpix:URIExtXKey").item(0);
 								String fairplayHlsKeyUri = uriExtXKeyElement.getTextContent();
-								drmInfo.setFairplayHlsKeyUri(decodeBase64(fairplayHlsKeyUri));
+								drmInfo.setFairplayHlsKeyUri(StringUtil.decodeBase64(fairplayHlsKeyUri));
 
 								Element hlsSignalingDataElement = (Element) drmSystem.getElementsByTagName("cpix:HLSSignalingData").item(0);
 								String fairplayHlsSignalingData = hlsSignalingDataElement.getTextContent();
-								drmInfo.setFairplayHlsSignalingData(decodeBase64(fairplayHlsSignalingData));
+								drmInfo.setFairplayHlsSignalingData(StringUtil.decodeBase64(fairplayHlsSignalingData));
 								break;
 							case NCG_SYSTEM_ID:
 								Element uriExtXKeyElementNCG = (Element) drmSystem.getElementsByTagName("cpix:URIExtXKey").item(0);
@@ -283,7 +282,7 @@ public class PallyConCpixClient implements CpixClient{
 							case HLS_NCG_SYSTEM_ID:
 								Element uriExtXKeyElementHLSNCG = (Element) drmSystem.getElementsByTagName("cpix:URIExtXKey").item(0);
 								String ncgHlsKeyUri = uriExtXKeyElementHLSNCG.getTextContent();
-								drmInfo.setNcgHlsKeyUri(decodeBase64(ncgHlsKeyUri));
+								drmInfo.setNcgHlsKeyUri(StringUtil.decodeBase64(ncgHlsKeyUri));
 								break;
 						}
 						break;

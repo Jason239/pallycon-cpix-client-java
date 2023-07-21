@@ -1,9 +1,4 @@
 package com.pallycon.cpix;
-import static com.pallycon.cpix.util.StringUtil.byteArrayToHexString;
-import static com.pallycon.cpix.util.StringUtil.hexStringToByteArray;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.pallycon.cpix.dto.ContentPackagingInfo;
 import com.pallycon.cpix.dto.DrmType;
@@ -11,6 +6,7 @@ import com.pallycon.cpix.dto.EncryptionScheme;
 import com.pallycon.cpix.dto.MultiDrmInfo;
 import com.pallycon.cpix.dto.TrackType;
 import com.pallycon.cpix.exception.CpixClientException;
+import com.pallycon.cpix.util.StringUtil;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +19,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 
 
 class CpixClientTest {
@@ -51,13 +49,13 @@ class CpixClientTest {
 		ContentPackagingInfo packagingInfo = cpixClient.GetContentKeyInfoFromPallyConKMS(contentId,
 			drmTypes, encryptionScheme, trackTypes);
 
-		assertNotNull(packagingInfo);
-		assertEquals(contentId, packagingInfo.getContentId());
-		assertFalse(packagingInfo.getMultiDrmInfos().isEmpty());
+		Assertions.assertNotNull(packagingInfo);
+		Assertions.assertEquals(contentId, packagingInfo.getContentId());
+		Assertions.assertFalse(packagingInfo.getMultiDrmInfos().isEmpty());
 
 		for (MultiDrmInfo drmInfo : packagingInfo.getMultiDrmInfos()) {
-			assertNotNull(drmInfo.getKeyId());
-			assertNotNull(drmInfo.getKey());
+			Assertions.assertNotNull(drmInfo.getKeyId());
+			Assertions.assertNotNull(drmInfo.getKey());
 		}
 
 		// Create and output JSON-formatted data for better readability.
@@ -92,12 +90,12 @@ class CpixClientTest {
 			}
 			strMultidrmInfo.put("key_id_hex", multiDrmInfo.getKeyId().replace("-", ""));
 			strMultidrmInfo.put("key_id_b64", Base64.getEncoder().encodeToString(
-				hexStringToByteArray(multiDrmInfo.getKeyId().replace("-", ""))));
+				StringUtil.hexStringToByteArray(multiDrmInfo.getKeyId().replace("-", ""))));
 			strMultidrmInfo.put("key_hex",
-				byteArrayToHexString(Base64.getDecoder().decode(multiDrmInfo.getKey())));
+				StringUtil.byteArrayToHexString(Base64.getDecoder().decode(multiDrmInfo.getKey())));
 			strMultidrmInfo.put("key_b64", multiDrmInfo.getKey());
 			strMultidrmInfo.put("iv_hex",
-				byteArrayToHexString(Base64.getDecoder().decode(multiDrmInfo.getIv())));
+				StringUtil.byteArrayToHexString(Base64.getDecoder().decode(multiDrmInfo.getIv())));
 			strMultidrmInfo.put("iv_b64", multiDrmInfo.getIv());
 
 			Map<String, Object> widevineObj = new LinkedHashMap<>();
